@@ -7,16 +7,16 @@
 
 ---
 
-## 1️⃣ RICK AND MORTY API
+##  RICK AND MORTY API
 
-### 📋 Información General
+###  Información General
 - **Base URL**: `https://rickandmortyapi.com/api`
 - **Tipo**: REST API
 - **Autenticación**: No requiere autenticación
 - **Formato**: JSON
 - **Total de personajes**: 826+
 
-### 🔗 Endpoints Principales
+###  Endpoints Principales
 
 #### 1.1 Obtener todos los personajes
 **Endpoint**: `GET https://rickandmortyapi.com/api/character`
@@ -122,16 +122,16 @@ GET https://rickandmortyapi.com/api/character/1,2,3
 
 ---
 
-## 2️⃣ POKÉMON API (PokéAPI)
+##  POKÉMON API (PokéAPI)
 
-### 📋 Información General
+###  Información General
 - **Base URL**: `https://pokeapi.co/api/v2`
 - **Tipo**: REST API
 - **Autenticación**: No requiere autenticación
 - **Formato**: JSON
 - **Total de Pokémon**: 1000+
 
-### 🔗 Endpoints Principales
+###  Endpoints Principales
 
 #### 2.1 Obtener lista de Pokémon
 **Endpoint**: `GET https://pokeapi.co/api/v2/pokemon`
@@ -295,20 +295,20 @@ GET https://pokeapi.co/api/v2/pokemon-species/25
 
 ---
 
-## 📊 Comparación de las APIs
+##  Comparación de las APIs
 
 | Característica | Rick and Morty API | Pokémon API |
 |----------------|-------------------|-------------|
 | Total de elementos | 826+ personajes | 1281+ Pokémon |
 | Paginación | 20 por página | Configurable (limit) |
-| Filtros | ✅ Por nombre, status, species, gender | ❌ Solo list/detail |
-| Imágenes | ✅ Directas en response | ✅ Múltiples sprites |
+| Filtros |  Por nombre, status, species, gender |  Solo list/detail |
+| Imágenes |  Directas en response |  Múltiples sprites |
 | Información adicional | Location, episodes | Stats, abilities, types |
 | Complejidad | Baja | Media |
 
 ---
 
-## 🛠️ Estrategia de Implementación
+##  Estrategia de Implementación
 
 ### Para Rick and Morty:
 1. Crear función para obtener lista paginada con filtros
@@ -331,7 +331,7 @@ GET https://pokeapi.co/api/v2/pokemon-species/25
 
 ---
 
-## 📝 Ejemplos de código Ajax con jQuery
+##  Ejemplos de código Ajax con jQuery
 
 ### Rick and Morty - Obtener personajes
 ```javascript
@@ -369,7 +369,7 @@ $.get('https://pokeapi.co/api/v2/pokemon?limit=20', function(data) {
 
 ---
 
-## ✅ Checklist de Implementación
+##  Checklist de Implementación
 
 - [ ] Crear estructura HTML con secciones para cada API
 - [ ] Incluir jQuery desde CDN
