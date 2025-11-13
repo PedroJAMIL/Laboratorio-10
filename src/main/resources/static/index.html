@@ -54,6 +54,9 @@
             <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#explorers">Exploradores</button>
             </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#practicantes">Practicantes</button>
+            </li>
         </ul>
 
         <div class="tab-content">
@@ -152,6 +155,75 @@
                 <div id="explorerAgents" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
             </div>
 
+            <div class="tab-pane fade" id="practicantes">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>Gestión de Practicantes Multiversales</h5>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#practicanteModal" onclick="abrirModalNuevo()">
+                            <i class="fas fa-plus"></i> Nuevo Practicante
+                        </button>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    Total de practicantes: <strong id="practicanteTotal">0</strong>
+                </div>
+
+                <div id="practicanteLoading" class="text-center py-5" style="display: none;">
+                    <div class="spinner-border"></div>
+                    <p>Cargando practicantes...</p>
+                </div>
+
+                <div id="practicantesList" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="practicanteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="practicanteModalTitle">Nuevo Practicante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="practicanteForm">
+                        <input type="hidden" id="practicanteId">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="nombreCompleto" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Carrera</label>
+                            <input type="text" class="form-control" id="carrera" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Universidad</label>
+                            <input type="text" class="form-control" id="universidad" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">País</label>
+                            <input type="text" class="form-control" id="pais" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Estado</label>
+                            <select class="form-select" id="estado" required>
+                                <option value="Activo">Activo</option>
+                                <option value="Egresado">Egresado</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarPracticante()">Guardar</button>
+                </div>
+            </div>
         </div>
     </div>
 

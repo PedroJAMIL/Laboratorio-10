@@ -1,6 +1,7 @@
 let rmCurrentPage = 1;
 let pkCurrentOffset = 0;
 let explorers = [];
+const API_URL = 'http://localhost:8080/api/practicantes';
 
 const ranks = ["Capitán Dimensional", "Explorador Elite", "Guardián del Portal", "Viajero Temporal", "Cazador de Anomalías"];
 const descriptions = ["Experto en navegación entre dimensiones", "Mantiene el equilibrio entre universos", "Detecta fracturas dimensionales", "Registra nuevas especies", "Veterano de 500+ misiones"];
@@ -9,6 +10,7 @@ $(document).ready(function() {
     loadRickAndMorty();
     loadPokemon();
     loadExplorers(10);
+    loadPracticantes();
     
     $('#rmSearchBtn').click(function() {
         rmCurrentPage = 1;
@@ -254,3 +256,117 @@ function showAgentModal(agent) {
     $('#modalBody').html(html);
     new bootstrap.Modal($('#detailModal')).show();
 }
+
+function loadPracticantes() {
+    $('#practicanteLoading').show();
+    
+    $.get(API_URL, function(data) {
+        $('#practicantesList').empty();
+        
+        $.each(data, function(index, p) {
+            let card = '<div class="col">' +
+                '<div class="card h-100">' +
+                '<div class="card-body">' +
+                '<h5>' + p.nombreCompleto + '</h5>' +
+                '<p class="mb-1"><strong>Carrera:</strong> ' + p.carrera + '</p>' +
+                '<p class="mb-1"><strong>Universidad:</strong> ' + p.universidad + '</p>' +
+                '<p class="mb-1"><strong>Email:</strong> ' + p.email + '</p>' +
+                '<p class="mb-1"><strong>País:</strong> ' + p.pais + '</p>' +
+                '<p class="mb-1"><span class="badge bg-' + (p.estado === 'Activo' ? 'success' : 'secondary') + '">' + p.estado + '</span></p>' +
+                '<div class="mt-3">' +
+                '<button class="btn btn-sm btn-warning" onclick="editarPracticante(' + p.id + ')">Editar</button> ' +
+                '<button class="btn btn-sm btn-danger" onclick="eliminarPracticante(' + p.id + ')">Eliminar</button>' +
+                '</div>' +
+                '</div></div></div>';
+            
+            $('#practicantesList').append(card);
+        });
+        
+        $('#practicanteTotal').text(data.length);
+        $('#practicanteLoading').hide();
+    }).fail(function() {
+        $('#practicanteLoading').hide();
+        alert('Error al cargar practicantes. Verifica que el servidor esté corriendo en http://localhost:8080');
+    });
+}
+
+function abrirModalNuevo() {
+    $('#practicanteModalTitle').text('Nuevo Practicante');
+    $('#practicanteForm')[0].reset();
+    $('#practicanteId').val('');
+}
+
+function editarPracticante(id) {
+    $.get(API_URL + '/' + id, function(p) {
+        $('#practicanteModalTitle').text('Editar Practicante');
+        $('#practicanteId').val(p.id);
+        $('#nombreCompleto').val(p.nombreCompleto);
+        $('#carrera').val(p.carrera);
+        $('#universidad').val(p.universidad);
+        $('#email').val(p.email);
+        $('#pais').val(p.pais);
+        $('#estado').val(p.estado);
+        new bootstrap.Modal($('#practicanteModal')).show();
+    });
+}
+
+function guardarPracticante() {
+    let id = $('#practicanteId').val();
+    let data = {
+        nombreCompleto: $('#nombreCompleto').val(),
+        carrera: $('#carrera').val(),
+        universidad: $('#universidad').val(),
+        email: $('#email').val(),
+        pais: $('#pais').val(),
+        estado: $('#estado').val()
+    };
+    
+    if (id) {
+        $.ajax({
+            url: API_URL + '/' + id,
+            method: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function() {
+                bootstrap.Modal.getInstance($('#practicanteModal')).hide();
+                loadPracticantes();
+                alert('Practicante actualizado correctamente');
+            },
+            error: function() {
+                alert('Error al actualizar practicante');
+            }
+        });
+    } else {
+        $.ajax({
+            url: API_URL,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function() {
+                bootstrap.Modal.getInstance($('#practicanteModal')).hide();
+                loadPracticantes();
+                alert('Practicante creado correctamente');
+            },
+            error: function() {
+                alert('Error al crear practicante');
+            }
+        });
+    }
+}
+
+function eliminarPracticante(id) {
+    if (confirm('¿Estás seguro de eliminar este practicante?')) {
+        $.ajax({
+            url: API_URL + '/' + id,
+            method: 'DELETE',
+            success: function() {
+                loadPracticantes();
+                alert('Practicante eliminado correctamente');
+            },
+            error: function() {
+                alert('Error al eliminar practicante');
+            }
+        });
+    }
+}
+
